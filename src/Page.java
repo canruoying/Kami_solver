@@ -1,3 +1,9 @@
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+
 /**
  * 
  */
@@ -35,6 +41,40 @@ public class Page {
 				islandMap[r][c] = p.getIslandMap(r, c);
 			}
 		}
+	}
+	
+	public static int[][] fileToArray(String fileName) throws IOException {
+		ArrayList<ArrayList<Integer>> rows = new ArrayList<ArrayList<Integer>>();
+		FileInputStream inFile = null;
+		BufferedReader reader = null;
+		try {
+			inFile = new FileInputStream(fileName);
+			reader = new BufferedReader(new InputStreamReader(inFile));
+
+			String line;
+			while ((line = reader.readLine()) != null) {
+				ArrayList<Integer> row = new ArrayList<Integer>();
+				for (int i = 0; i < line.length(); i++) {
+					row.add(Character.getNumericValue(line.charAt(i)));
+				}
+				rows.add(row);
+			}
+		} finally {
+			if (inFile != null) {
+				reader.close();
+				inFile.close();
+			}
+		}
+		int height = rows.size();
+		int[][] m = new int[height][];
+		for (int r = 0; r < height; r++) {
+			int width = rows.get(r).size();
+			m[r] = new int[width];
+			for (int c = 0; c < width; c++) {
+				m[r][c] = rows.get(r).get(c); 
+			}
+		}
+		return m;
 	}
 
 	public int[][] getPageMatrix() {

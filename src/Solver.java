@@ -1,3 +1,7 @@
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+
 /**
  * 
  */
@@ -11,20 +15,33 @@ public class Solver {
 	private int stepsRequired;
 	private Page[] pageStep;
 	public boolean solved;
+	private long timeElapsed;
 
 	public Solver(Page p, int steps) {
 		page = p;
-		stepsRequired = steps;
-		pageStep = new Page[stepsRequired];
+		stepsRequired = 0;
 		solved = false;
+		timeElapsed = 0;
 	}
 
 	public Page getPage() {
 		return page;
 	}
 
+	// public void solve() {
+	// long startTime = System.currentTimeMillis();
+	// solved = solve(page, 0);
+	// timeElapsed = System.currentTimeMillis() - startTime;
+	// }
+
 	public void solve() {
-		solved = solve(page, 0);
+		long startTime = System.currentTimeMillis();
+		while (!solved) {
+			stepsRequired++;
+			pageStep = new Page[stepsRequired];
+			solved = solve(page, 0);
+		}
+		timeElapsed = System.currentTimeMillis() - startTime;
 	}
 
 	public void print() {
@@ -40,9 +57,23 @@ public class Solver {
 					pageStep[i].print();
 				}
 			}
+			System.out.printf("Time Elapsed: %dms\n", timeElapsed);
 		} else {
-			System.out.println("not solved");
+			System.out.println("Not solved.");
 		}
+	}
+
+	public void printToFile(String fileName) throws IOException {
+		FileOutputStream outFile = null;
+		PrintStream outStream = null;
+
+		outFile = new FileOutputStream(fileName);
+		outStream = new PrintStream(outFile);
+		System.setOut(outStream);
+		print();
+		outStream.close();
+		outFile.close();
+
 	}
 
 	public boolean solve(Page p, int stepNumber) {
@@ -64,5 +95,4 @@ public class Solver {
 		}
 		return false;
 	}
-
 }
