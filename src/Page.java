@@ -149,6 +149,8 @@ public class Page {
 			}
 			checkAndMark(r, c + 1, islandColor);
 			checkAndMark(r + 1, c, islandColor);
+			checkAndMark(r, c - 1, islandColor);
+			checkAndMark(r - 1, c, islandColor);
 			return true;
 		}
 	}
