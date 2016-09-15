@@ -15,12 +15,15 @@ public class Solver {
 	private int stepsRequired;
 	private Page[] pageStep;
 	public boolean solved;
+	public long combinationsTested;
 	private long timeElapsed;
 
-	public Solver(Page p, int steps) {
+	public Solver(Page p) {
 		page = p;
 		stepsRequired = 0;
+		pageStep = null;
 		solved = false;
+		combinationsTested = 0;
 		timeElapsed = 0;
 	}
 
@@ -28,14 +31,9 @@ public class Solver {
 		return page;
 	}
 
-	// public void solve() {
-	// long startTime = System.currentTimeMillis();
-	// solved = solve(page, 0);
-	// timeElapsed = System.currentTimeMillis() - startTime;
-	// }
-
 	public void solve() {
 		long startTime = System.currentTimeMillis();
+		combinationsTested = 0;
 		int height = page.getHeight();
 		int width = page.getWidth();
 		int islandCount = page.getIslandCount();
@@ -51,7 +49,9 @@ public class Solver {
 				System.out.print("No solutions found. ");
 			}
 			timeElapsed = System.currentTimeMillis() - startTime;
-			System.out.printf("Time Elapsed: %dms\n", timeElapsed);
+			System.out.println();
+			System.out.printf("Time Elapsed: %dms ", timeElapsed);
+			System.out.printf("Combinations Tested: %d\n", combinationsTested);
 		}
 	}
 
@@ -80,8 +80,10 @@ public class Solver {
 
 		outFile = new FileOutputStream(fileName);
 		outStream = new PrintStream(outFile);
+		PrintStream stdout = System.out;
 		System.setOut(outStream);
 		print();
+		System.setOut(stdout);
 		outStream.close();
 		outFile.close();
 
@@ -89,6 +91,7 @@ public class Solver {
 
 	public boolean solve(Page p, int stepNumber) {
 		int islandCount = p.getIslandCount();
+		combinationsTested++;
 		if (islandCount == 1) {
 			return true;
 		} else if (stepsRequired <= stepNumber) {

@@ -42,7 +42,7 @@ public class Page {
 			}
 		}
 	}
-	
+
 	public static int[][] fileToArray(String fileName) throws IOException {
 		ArrayList<ArrayList<Integer>> rows = new ArrayList<ArrayList<Integer>>();
 		FileInputStream inFile = null;
@@ -71,7 +71,7 @@ public class Page {
 			int width = rows.get(r).size();
 			m[r] = new int[width];
 			for (int c = 0; c < width; c++) {
-				m[r][c] = rows.get(r).get(c); 
+				m[r][c] = rows.get(r).get(c);
 			}
 		}
 		return m;
