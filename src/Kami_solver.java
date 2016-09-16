@@ -18,6 +18,7 @@ class Kami_solver {
 			Solver s = new Solver(p);
 			s.solve();
 			s.printToFile(args[i] + ".out");
+			System.out.println();
 		}
 	}
 

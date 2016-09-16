@@ -3,6 +3,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  * 
@@ -18,6 +19,7 @@ public class Page {
 	private int width;
 	private int height;
 	private int islandCount;
+	private HashSet<Integer> colors;
 	private int colorRange;
 
 	public Page(int[][] page) {
@@ -117,15 +119,23 @@ public class Page {
 		return islandCount;
 	}
 
+	public int getColorCount() {
+		return colors.size();
+	}
+
 	private void createIslandMap() {
 		initializeIslandMap();
 		islandCount = 1;
 		colorRange = 0;
+		colors = new HashSet<Integer>();
 		for (int r = 0; r < getHeight(); r++) {
 			for (int c = 0; c < getWidth(); c++) {
 				int currentIslandColor = getPageMatrix(r, c);
 				if (checkAndMark(r, c, currentIslandColor)) {
 					islandCount++;
+					if (!colors.contains(currentIslandColor)) {
+						colors.add(currentIslandColor);
+					}
 					if (currentIslandColor > colorRange) {
 						colorRange = currentIslandColor;
 					}

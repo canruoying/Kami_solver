@@ -37,7 +37,9 @@ public class Solver {
 		int height = page.getHeight();
 		int width = page.getWidth();
 		int islandCount = page.getIslandCount();
-		System.out.printf("Solving %d by %d matrix with %d islands.\n", height, width, islandCount);
+		int colorCount = page.getColorCount();
+		System.out.printf("Solving %d by %d matrix with %d islands and %d colors.\n", height, width, islandCount,
+				colorCount);
 		while (!solved) {
 			stepsRequired++;
 			System.out.printf("Working on %d step solutions...", stepsRequired);
@@ -90,11 +92,11 @@ public class Solver {
 	}
 
 	public boolean solve(Page p, int stepNumber) {
-		int islandCount = p.getIslandCount();
 		combinationsTested++;
+		int islandCount = p.getIslandCount();
 		if (islandCount == 1) {
 			return true;
-		} else if (stepsRequired <= stepNumber) {
+		} else if (p.getColorCount() - 1 > stepsRequired - stepNumber) {
 			return false;
 		}
 		for (int islandID = 1; islandID <= p.getIslandCount(); islandID++) {
