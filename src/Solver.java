@@ -100,7 +100,7 @@ public class Solver {
 			return false;
 		}
 		for (int islandID = 1; islandID <= p.getIslandCount(); islandID++) {
-			for (int islandColor = 1; islandColor <= p.getColorRange(); islandColor++) {
+			for (int islandColor : p.colors) {
 				if (islandColor != p.getIslandColor(islandID)) {
 					Page flippedPage = p.flipIsland(islandID, islandColor);
 					if (flippedPage.getIslandCount() < islandCount) {

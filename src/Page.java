@@ -19,8 +19,7 @@ public class Page {
 	private int width;
 	private int height;
 	private int islandCount;
-	private HashSet<Integer> colors;
-	private int colorRange;
+	public HashSet<Integer> colors;
 
 	public Page(int[][] page) {
 		pageMatrix = page;
@@ -34,7 +33,6 @@ public class Page {
 		width = p.getWidth();
 		height = p.getHeight();
 		islandCount = p.getIslandCount();
-		colorRange = p.getColorRange();
 		pageMatrix = new int[height][width];
 		islandMap = new int[height][width];
 		for (int r = 0; r < getHeight(); r++) {
@@ -111,10 +109,6 @@ public class Page {
 		return height;
 	}
 
-	public int getColorRange() {
-		return colorRange;
-	}
-
 	public int getIslandCount() {
 		return islandCount;
 	}
@@ -126,19 +120,13 @@ public class Page {
 	private void createIslandMap() {
 		initializeIslandMap();
 		islandCount = 1;
-		colorRange = 0;
 		colors = new HashSet<Integer>();
 		for (int r = 0; r < getHeight(); r++) {
 			for (int c = 0; c < getWidth(); c++) {
 				int currentIslandColor = getPageMatrix(r, c);
 				if (checkAndMark(r, c, currentIslandColor)) {
 					islandCount++;
-					if (!colors.contains(currentIslandColor)) {
-						colors.add(currentIslandColor);
-					}
-					if (currentIslandColor > colorRange) {
-						colorRange = currentIslandColor;
-					}
+					colors.add(currentIslandColor);
 				}
 			}
 		}
