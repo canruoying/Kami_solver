@@ -15,11 +15,13 @@ import java.util.HashSet;
  */
 public class Page {
 	private int[][] pageMatrix;
+	private String unrolled;
 	private int[][] islandMap;
 	private int width;
 	private int height;
 	private int islandCount;
 	public HashSet<Integer> colors;
+	public Page parent;
 
 	public Page(int[][] page) {
 		pageMatrix = page;
@@ -27,6 +29,22 @@ public class Page {
 		height = getPageMatrix().length;
 
 		createIslandMap();
+		
+	}
+
+	private void unroll() {
+		unrolled = new String();
+		int i = 0;
+		for (int r = 0; r < getHeight(); r++) {
+			for (int c = 0; c < getWidth(); c++) {
+				unrolled += pageMatrix[r][c];
+				i++;
+			}
+		}
+	}
+
+	public String getUnrolled() {
+		return unrolled;
 	}
 
 	public Page(Page p) {
@@ -131,6 +149,7 @@ public class Page {
 			}
 		}
 		islandCount -= 1;
+		unroll();
 	}
 
 	private boolean checkAndMark(int r, int c, int islandColor) {
