@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.ArrayList;
-// import org.apache.commons.lang.ArrayUtils;
 
 /**
  * 
@@ -149,15 +148,8 @@ public class Solver {
 			for (int islandColor : p.colors) {
 				shuffledColors.add(islandColor);
 			}
-			// Collections.shuffle(shuffled);
-			// Collections.shuffle(shuffledColors);
-			if (System.currentTimeMillis() % 3 == 0) {
-				Collections.sort(shuffled);
-				Collections.sort(shuffledColors);
-			} else {
-				Collections.shuffle(shuffled);
-				Collections.shuffle(shuffledColors);
-			}
+			Collections.shuffle(shuffled);
+			Collections.shuffle(shuffledColors);
 
 			for (int islandID : shuffled) {
 				for (int islandColor : shuffledColors) {
